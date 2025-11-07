@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Barang</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; padding: 20px; }
+    input, textarea, button { display:block; margin:8px 0; padding:8px; width:100%; border-radius:6px; border:1px solid #555; background:#222; color:#fff; }
+    button { background:#d00; border:none; cursor:pointer; }
+    button:hover { background:#f33; }
+  </style>
+</head>
+<body>
+  <h1>Tambah Barang Masuk</h1>
+  <input type="text" id="namaBarang" placeholder="Nama Barang">
+  <input type="text" id="merekBarang" placeholder="Merek Barang">
+  <textarea id="spesifikasiBarang" placeholder="Spesifikasi Barang"></textarea>
+  <input type="date" id="tanggalPembelian">
+  <input type="text" id="supplierBarang" placeholder="Supplier">
+  <input type="number" id="hargaBarang" placeholder="Harga Barang per Unit (Rp)">
+  <input type="number" id="estimasiJual" placeholder="Estimasi Harga Jual per Unit (Rp)">
+  <input type="number" id="jumlahBarang" placeholder="Jumlah Barang">
+  <textarea id="keteranganBarang" placeholder="Keterangan Barang"></textarea>
+  <input type="file" id="fotoBarang" accept="image/*">
+  <button onclick="tambahBarang()">Simpan ke Data</button>
+
+  <script>
+    let barangList = JSON.parse(localStorage.getItem("barangList")) || [];
+    let idCounter = barangList.length ? Math.max(...barangList.map(b=>b.id))+1 : 1;
+
+    function tambahBarang(){
+      const nama = document.getElementById('namaBarang').value.trim();
+      const merek = document.getElementById('merekBarang').value.trim();
+      const spesifikasi = document.getElementById('spesifikasiBarang').value.trim();
+      const tanggalPembelian = document.getElementById('tanggalPembelian').value;
+      const supplier = document.getElementById('supplierBarang').value.trim();
+      const hargaBarang = parseFloat(document.getElementById('hargaBarang').value);
+      const estimasiJual = parseFloat(document.getElementById('estimasiJual').value);
+      const jumlah = parseInt(document.getElementById('jumlahBarang').value);
+      const keterangan = document.getElementById('keteranganBarang').value.trim();
+      const fileInput = document.getElementById('fotoBarang');
+      const file = fileInput.files[0];
+
+      if(!nama || !merek || !spesifikasi || !tanggalPembelian || !supplier ||
+         isNaN(hargaBarang) || hargaBarang<=0 || isNaN(estimasiJual) || estimasiJual<=0 ||
+         isNaN(jumlah) || jumlah<=0){
+          alert("Isi semua data dengan benar!");
+          return;
+      }
+
+      const simpan = (foto) => {
+        const barang = {
+          id: idCounter++,
+          nama, merek, spesifikasi, tanggalPembelian, supplier,
+          hargaBarang, estimasiJual, jumlah,
+          total: jumlah * estimasiJual,
+          keterangan, foto,
+          tanggalMasuk: new Date().toLocaleString(),
+          tanggalKeluar: "-"
+        };
+        barangList.push(barang);
+        localStorage.setItem("barangList", JSON.stringify(barangList));
+        alert("Barang berhasil ditambahkan!");
+        document.querySelectorAll('input, textarea').forEach(el => el.value = "");
+      };
+
+      if(file){
+        const reader = new FileReader();
+        reader.onload = e => simpan(e.target.result);
+        reader.readAsDataURL(file);
+      } else {
+        simpan("https://via.placeholder.com/80");
+      }
+    }
+  </script>
+</body>
+</html>
