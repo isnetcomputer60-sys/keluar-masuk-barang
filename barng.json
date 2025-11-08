@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "foto": "https://via.placeholder.com/80x60",
+    "nama": "Laptop",
+    "merek": "Asus",
+    "spesifikasi": "Core i5, 8GB RAM, SSD 512GB",
+    "tanggalPembelian": "2025-10-15",
+    "supplier": "PT Teknologi Maju",
+    "hargaBarang": 8500000,
+    "estimasiJual": 9500000,
+    "jumlah": 5,
+    "total": 47500000,
+    "keterangan": "Barang baru",
+    "tanggalMasuk": "2025-10-15",
+    "tanggalKeluar": "-"
+  },
+  {
+    "id": 2,
+    "foto": "https://via.placeholder.com/80x60",
+    "nama": "Mouse Wireless",
+    "merek": "Logitech",
+    "spesifikasi": "Bluetooth, Rechargeable",
+    "tanggalPembelian": "2025-10-10",
+    "supplier": "Toko Komputer Jaya",
+    "hargaBarang": 150000,
+    "estimasiJual": 200000,
+    "jumlah": 20,
+    "total": 4000000,
+    "keterangan": "Stok tersedia",
+    "tanggalMasuk": "2025-10-10",
+    "tanggalKeluar": "-"
+  }
+]
